@@ -16,7 +16,7 @@ def setJson(self):
       with open(“{}{}.json”.format(JSON_FOLDER, item), ‘r’ ) as f:
       setList[item] = json.load(f)
       except (IOError, ValueError) as error:
-      print “no character data found”
+          print “no character data found”
       blanktemplate={“FACE_NOSE”,”FACE_EYES”, “FACE_MOUTH”,”ARM_L”, “ARM_R”, “LEG_L”, “LEG_R”}
       with open(“{}{}.json”.format(JSON_FOLDER, item), “w”) as outFile:
       json.dump(blankTemplate, outFile)
