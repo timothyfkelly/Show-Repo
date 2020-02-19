@@ -5,7 +5,7 @@
 def coloursJson(self):
   COLOR_PATH =“{}index_data.json”.format(JSON_FOLDER)
   with open(COLOR_PATH) as f:
-    Mayacolourdict = json.load(f)
+    mayaColourDict = json.load(f)
     return mayaColourDict
 
 def setJson(self):
