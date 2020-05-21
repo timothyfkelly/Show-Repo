@@ -132,12 +132,12 @@ void generateChunks()
 {
 	for (int x = 0; x < chunksX;x++)
 		for (int y = 0; y < chunksY;y++)
-		{
+			{
 			int chomnk = rand() % 6;
 			if (chomnk == 4)
 				chomnk = 1;
 			chunkData[x][y][0] = chomnk;
-		}
+			}
 
 	for (int x = 0; x < chunksX;x++)
 	{
@@ -239,9 +239,9 @@ void generateTerrain()
 								terrain[cx][cy][cz][x][y][z] = AIR;
 							}
 							terrain[cx][cy][cz][x][y][0] = BEDROCK;
-						}
+						}	
 					}
-				}
+				}	
 				if (chunkData[cx][cy][cz] == PLAINS)
 					generateTree(cx, cy, cz);
 				if (chunkData[cx][cy][cz] == FOREST)
@@ -668,8 +668,8 @@ void render()
 	if (gameTicks % 100 == 0)
 	{
 		cout << "Fluids tick" << endl;
-		spreadWater();
-		spreadLava();
+	spreadWater();
+	spreadLava();
 	}
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -740,11 +740,11 @@ void render()
 								renderBedrockBlock(cx, cy, cz, x, y, z);
 							else if (terrain[cx][cy][cz][x][y][z] == LAVA)
 								renderLavaBlock(cx, cy, cz, x, y, z);
+							}
 						}
 					}
 				}
 			}
-		}
 	}
 	drawStatusBar();
 	glutSwapBuffers();
