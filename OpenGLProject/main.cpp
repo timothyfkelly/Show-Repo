@@ -5,7 +5,6 @@
 #include <sstream>
 #include <time.h>
 #include "mobs.h"
-#include "main.h"
 
 using namespace std;
 
@@ -16,6 +15,9 @@ float currentRotation = 0.0;
 
 Sheep* ptr[2];
 Sheep mobs[2];
+
+Slime* ptrS[5];
+Slime mobss[5];
 
 const int chunkSize = 10;
 const int chunksX = 5;
@@ -56,6 +58,18 @@ Sheep** createSheep(Sheep* ptr[])
 	 ptr[0]->setColour(1.0f, 1.0f, 1.0f);
 	 ptr[1]->setColour(1.0f, 1.0f, 1.0f);
 	 return ptr;
+}
+
+Slime** createSlime(Slime* ptrS[])
+{
+	srand(time(NULL));
+	for (int i = 0; i < 5; i++)
+	{
+		ptrS[i] = &mobss[i];
+		ptrS[i]->setValues(rand() % 20 + 1, 6, rand() % 20 + 1);
+		ptrS[i]->setColour(rand() & 100 / 100, rand() & 100 / 100, rand() & 100 / 100);
+	}
+	return ptrS;
 }
 
 void drawText(const char* text, int length, int x, int y) {
@@ -305,9 +319,9 @@ void generateTerrain()
 								terrain[cx][cy][cz][x][y][z] = AIR;
 							}
 							terrain[cx][cy][cz][x][y][0] = BEDROCK;
-						}	
+						}
 					}
-				}	
+				}
 				if (chunkData[cx][cy][cz] == PLAINS)
 					generateTree(cx, cy, cz);
 				if (chunkData[cx][cy][cz] == FOREST)
@@ -456,7 +470,7 @@ void renderFront(int cx, int cy, int cz, int x, int y, int z)
 }
 void renderTop(int cx, int cy, int cz, int x, int y, int z)
 {
-	if ((terrain[cx][cy][cz][x][y][z+1] == AIR) || (terrain[cx][cy][cz][x][y][z] == STUMP && terrain[cx][cy][cz][x][y][z+1] != STUMP) 
+	if ((terrain[cx][cy][cz][x][y][z+1] == AIR) || (terrain[cx][cy][cz][x][y][z] == STUMP && terrain[cx][cy][cz][x][y][z+1] != STUMP)
 		|| (terrain[cx][cy][cz][x][y][z] == LEAF && terrain[cx][cy][cz][x][y][z + 1] != LEAF))
 	{
 		if (terrain[cx][cy][cz][x][y][z] == DIRT)
@@ -542,7 +556,7 @@ void renderBlock(int cx, int cy, int cz, int x, int y, int z, int block)
 	glEnd();
 	glPopMatrix();
 }
-   
+
 void renderPlayer()
 {
 	glPushMatrix();
@@ -598,35 +612,35 @@ void renderMobs()
 		glBegin(GL_QUADS);
 		glColor3f(r, g, b);
 		// front
-		glVertex3f(x,		y,			z);
-		glVertex3f(1.0f + x,y,			z);
-		glVertex3f(1.0f + x,0.7f + y,	z);
-		glVertex3f(z,		0.7f + y,	z);
-		////// back
-		//glVertex3f(x,		y,			z-1.0f);
-		//glVertex3f(x+1.0f,	y,			z-1.0f);
-		//glVertex3f(x+1.0f,	y+0.7f,		z-1.0f);
-		//glVertex3f(x,		y+0.7f,		z-1.0f);
-		////// right
-		//glVertex3f(x+1.0f,  y,			z);
-		//glVertex3f(x+1.0f,  y,			z-1.0f);
-		//glVertex3f(x+1.0f,  y + 0.7f,	z-1.0f);
-		//glVertex3f(x+1.0f,  y + 0.7f,	z);
-		////// left
-		//glVertex3f(x,		y,			z);
-		//glVertex3f(x,		y,			z-1.0f);
-		//glVertex3f(x,		y + 0.7f,	z-1.0f);
-		//glVertex3f(x,		y + 0.7f,	z);
-		////// top
-		//glVertex3f(x,		y+0.7f,		z);
-		//glVertex3f(x+1.0f,	y+0.7f,		z);
-		//glVertex3f(x+1.0f,	y+0.7f,		z-1.0f);
-		//glVertex3f(x,		y+0.7f,		z-1.0f);
-		////// bottom
-		//glVertex3f(x,		y,			z);
-		//glVertex3f(x+1.0f,	y,			z);
-		//glVertex3f(x+1.0f,	y,			z-1.0f);
-		//glVertex3f(x,		y,			z-1.0f);
+		glVertex3f(x,			y,			z);
+		glVertex3f(1.0f + x,	y,			z);
+		glVertex3f(1.0f + x,	0.7f + y,	z);
+		glVertex3f(x,			0.7f + y,	z);
+		// back
+		glVertex3f(x,			y,			z-1.0f);
+		glVertex3f(x+1.0f,		y,			z-1.0f);
+		glVertex3f(x+1.0f,		y+0.7f,		z-1.0f);
+		glVertex3f(x,			y+0.7f,		z-1.0f);
+		//// right
+		glVertex3f(x+1.0f,		y,			z);
+		glVertex3f(x+1.0f,		y,			z-1.0f);
+		glVertex3f(x+1.0f,		y+0.7f,		z-1.0f);
+		glVertex3f(x+1.0f,		y+0.7f,		z);
+		//// left
+		glVertex3f(x,			y,			z);
+		glVertex3f(x,			y,			z-1.0f);
+		glVertex3f(x,			y+0.7f,		z-1.0f);
+		glVertex3f(x,			y+0.7f,		z);
+		//// top
+		glVertex3f(x,			y+0.7f,		z);
+		glVertex3f(x+1.0f,		y+0.7f,		z);
+		glVertex3f(x+1.0f,		y+ 0.7f,	z-1.0f);
+		glVertex3f(x,			y+ 0.7f,	z-1.0f);
+		//// bottom
+		glVertex3f(x,			y,			z);
+		glVertex3f(x+1.0f,		y,			z);
+		glVertex3f(x+1.0f,		y,			z-1.0f);
+		glVertex3f(x,			y,			z-1.0f);
 		glPopMatrix();
 	}
 	glEnd();
@@ -652,7 +666,15 @@ void render()
 		cout << "Fluids tick" << endl;
 	spreadWater();
 	spreadLava();
+
+	int size = *(&ptr + 1) - ptr;
+	for (int i = 0; i < size; i++)
+	{
+		ptr[i]->randomMovement();
 	}
+	}
+
+
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
@@ -771,6 +793,7 @@ int main(int argc, char* argv[]) {
 	generateChunks();
 	generateTerrain();
 	createSheep(ptr);
+	createSlime(ptrS);
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 	glutInitWindowSize(1024, 768);
@@ -794,4 +817,3 @@ int main(int argc, char* argv[]) {
 	glutMainLoop();
 	return 0;
 }
-

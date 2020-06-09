@@ -5,6 +5,7 @@ private:
 	int x, y, z;
 public:
 	void setValues(const int x, const int y, const int z);
+	void randomMovement();
 	int getX();
 	int getY();
 	int getZ();
